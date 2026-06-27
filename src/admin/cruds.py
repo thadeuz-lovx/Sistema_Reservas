@@ -13,7 +13,7 @@ class AdminCRUDs:
         nuevo_admin = AdminSave(
             nombre=nombre,
             apellido=apellido,
-            estatus=estado
+            estado=estado
         )
 
         db.add(nuevo_admin)

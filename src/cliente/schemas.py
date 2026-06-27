@@ -9,7 +9,7 @@ class ClientBase(BaseModel):
     estado: str
     codigo: str
 
-class ClientMake(ClientMake):
+class ClientMake(ClientBase):
     pass
 
 class ClientUpdate(BaseModel):
