@@ -9,4 +9,3 @@ class AdminSave(Base):
     apellido = Column(String, nullable=False)
     estatus = Column(String, nullable=False)
 
-Base.metadata.create_all(engine)
