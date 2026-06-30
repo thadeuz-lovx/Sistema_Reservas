@@ -49,7 +49,7 @@ class ClientCRUDs:
         actualizar_usuario = user_upd.model_dump(exclude_unset=True)
 
         for k, v in actualizar_usuario.items():
-            setattr(actualizar_usuario, k, v)
+            setattr(busqueda, k, v)
 
         db.commit()
         db.refresh(busqueda)

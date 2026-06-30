@@ -7,5 +7,5 @@ class AdminSave(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String, nullable=False)
     apellido = Column(String, nullable=False)
-    estatus = Column(String, nullable=False)
+    estado = Column(String, nullable=False)
 
