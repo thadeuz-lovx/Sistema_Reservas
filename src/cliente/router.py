@@ -47,12 +47,19 @@ def actualizar(
     cliente_existente = ClientCRUDs.ver_por(db=db, id_usr=id_usr)
     if not cliente_existente:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cliente no encontrado")
-    
-    user_upd = ClientUpdate(
-        nombre=nombre, apellido=apellido, referencia=referencia,
-        email=email, codigo=codigo, estado=estado
-    )
-    
+
+    datos_limpios = {
+        k: v for k, v in {
+            "nombre": nombre,
+            "apellido": apellido,
+            "referencia": referencia,
+            "email": email,
+            "codigo": codigo,
+            "estado": estado
+        }.items() if v is not None
+    }
+
+    user_upd = ClientUpdate(**datos_limpios)
     ClientCRUDs.actualizar(db=db, id_usr=id_usr, user_upd=user_upd)
     return {"message": "Cliente actualizado correctamente"}
 
