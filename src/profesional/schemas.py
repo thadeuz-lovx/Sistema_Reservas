@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class ProfessionalBase(BaseModelse):
+class ProfessionalBase(BaseModel):
     nombre: str
     apellido: str
     especialidad: str
@@ -23,3 +23,4 @@ class ProfessionaResponse(ProfessionalBase):
 
     class Config:
         from_attributes = True
+

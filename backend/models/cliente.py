@@ -1,4 +1,4 @@
-from backend.database import Base, engine
+from backend.database import Base
 from sqlalchemy import Column, String, Integer
 
 class ClientSave(Base):

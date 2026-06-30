@@ -2,6 +2,9 @@ from sqlalchemy import Column, String, Integer
 from backend.database import Base
 
 class ProfessionalSave(Base):
+
+    __tablename__ = "profesional"
+    
     id = Column(Integer, primary_key=True)
     nombre = Column(String, nullable=False)
     apellido = Column(String, nullable=False)
