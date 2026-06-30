@@ -2,6 +2,9 @@ from src.cliente.router import routing as clientes
 from src.admin.router import routing as admin
 from src.profesional.router import routing as profesionales
 from fastapi import FastAPI
+from backend.database import Base, engine
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Mi API de Profesionales",
