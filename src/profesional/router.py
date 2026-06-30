@@ -75,8 +75,8 @@ def actualizar(
         raise HTTPException(status_code=400, detail="No se enviaron campos para modificar")
 
     actualizacion = ProfessionalCRUDs.actualizar(
-        db=db, id_prf=id_prf, datos=datos_actualizar
-    )
+    db=db, id_prf=id_prf, user_prf=ProfessionalUptade(**datos_actualizar)
+)
 
     if not actualizacion:
         raise HTTPException(status_code=404, detail="Usuario no actualizado")
