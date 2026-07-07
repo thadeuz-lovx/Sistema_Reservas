@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from backend.models.profesional import ProfessionalSave
 from src.profesional.schemas import ProfessionalUptade 
 
+#Modularizacion de funciones completas en base a cruds(Crear, Ver, Actualizar, Borrar)
 class ProfessionalCRUDs:
     @staticmethod
     def crear(

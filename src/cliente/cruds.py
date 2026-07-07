@@ -1,25 +1,28 @@
 from src.cliente.schemas import ClientUpdate
 from backend.models.cliente import ClientSave
 from sqlalchemy.orm import Session
-
+from sqlalchemy import select
 class ClientCRUDs:
     @staticmethod
     def crear(
-        db: Session,
+        db: Session,  
         nombre: str,
         apellido: str,
         referencia: str,
         email: str,
         estado: str,
-        codigo: str
+        codigo: str,
+        password_plano: str
     ):
+        
+        
         nuevo_usuario = ClientSave(
             nombre=nombre,
             apellido=apellido,
             referencia=referencia,
             email=email,
             estado=estado,
-            codigo=codigo
+            codigo=codigo,
         )
 
         db.add(nuevo_usuario)
@@ -29,19 +32,25 @@ class ClientCRUDs:
     
     @staticmethod
     def ver(db: Session):
-        return db.query(ClientSave).all()
+        # 3. SQLAlchemy Async no soporta db.query(). Usamos select() ejecutado con await
+        resultado =  db.execute(select(ClientSave))
+        return resultado.scalars().all()
     
     @staticmethod
-    def ver_por(db: Session, id_usr: int):
-        busqueda = db.query(ClientSave).filter(ClientSave.id == id_usr).first()
+    async def ver_por(db: Session, id_usr: int):
+        resultado =  db.execute(select(ClientSave).filter(ClientSave.id == id_usr))
+        busqueda = resultado.scalar_one_or_none()
 
         if not busqueda:
             return None
         
         return busqueda
+
     @staticmethod
     def actualizar(db: Session, id_usr: int, user_upd: ClientUpdate):
-        busqueda = db.query(ClientSave).filter(ClientSave.id == id_usr).first()
+        # Reutilizamos la lógica asíncrona para buscar primero
+        resultado =  db.execute(select(ClientSave).filter(ClientSave.id == id_usr))
+        busqueda = resultado.scalar_one_or_none()
 
         if not busqueda:
             return None
@@ -57,10 +66,13 @@ class ClientCRUDs:
     
     @staticmethod
     def eliminar(db: Session, id_usr: int):
-        busqueda = db.query(ClientSave).filter(ClientSave.id == id_usr).first()
+        resultado =  db.execute(select(ClientSave).filter(ClientSave.id == id_usr))
+        busqueda = resultado.scalar_one_or_none()
+
         if not busqueda:
             return None
         
+        # db.delete() prepara la eliminación en memoria, pero el commit la ejecuta en la BD
         db.delete(busqueda)
         db.commit()
 
